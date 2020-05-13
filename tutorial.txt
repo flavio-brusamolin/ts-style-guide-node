@@ -1,0 +1,101 @@
+Passo 1: Instale o Typescript e o Sucrase como dependencias de desenvolvimento do seu projeto.
+	-> npm i typescript sucrase -D
+
+Passo 2: Nesse passo, o nodemon será utilizado. Instale-o caso ainda não esteja instalado globalmente.
+	-> npm i nodemon -D
+
+Crie no diretório raiz um arquivo chamado "nodemon.json" e insira:
+
+	{
+		"watch": [
+			"src"
+		],
+		"ext": "ts",
+		"execMap": {
+			"ts": "sucrase-node src/server.ts"
+		}
+	}
+
+Obs: Perceba que para essa configuração funcionar o código-fonte deve estar dentro de uma pasta "src" e o arquivo principal deve se chamar "server.ts". Altere os nomes de acordo com o seu projeto.
+
+Passo 3: Crie os scripts de "dev" e "build" no "package.json".
+
+	"scripts": {
+		"dev": "nodemon src/server.ts",
+		"build": "sucrase ./src -d ./dist --transforms typescript,imports"
+	}
+
+Passo 4: Para execução em ambiante de desenvolvimento, execute:
+	-> npm run dev
+
+	Para gerar a buid de produção, execute:
+	-> npm run build
+
+Obs: O Sucrase é uma ótima ferramente para transpilação em desenvolvimento. Em ambiente de produção, existem ferramentas mais recomendadas.
+
+Nesse momento, seu projeto já está pronto para trabalhar com Typescript. Agora vamos configurar as ferramentas de estilo de código.
+
+Passo 5: Instale o ESLint e as dependecias necessárias para sua execução com Typescript.
+	-> npm i eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin -D
+
+Passo 6: Inicialize o ESLint no seu projeto e selecione as opções conforme descrito abaixo.
+	-> npx eslint --init
+
+	How would you like to use ESLint?
+	-> To check syntax, find problems, and enforce code style
+
+	What type of modules does your project use?
+	-> JavaScript modules (import/export)
+
+	Which framework does your project use?
+	-> None of these
+
+	Does your project use TypeScript?
+	-> y
+
+	Where does your code run?
+	-> Node
+
+	How would you like to define a style for your project?
+	-> Use a popular style guide
+
+	Which style guide do you want to follow?
+	-> Escolha o seu favorito. Nesse template usaremos o Airbnb.
+
+	What format do you want your config file to be in?
+	-> JSON
+
+Passo 7: Instale a extensão do ESLint no VSCode.
+
+Passo 8: Adicione um novo elemento ao array de "extends" no ".eslintrc.json":
+	"plugin:@typescript-eslint/recommended"
+
+Passo 9: Adicione as seguintes linhas no settings.json do seu VSCode:
+
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	}
+
+Passo 10: Instale o Prettier e as dependencias necessárias para sua integração com o ESLint.
+	-> npm i prettier eslint-config-prettier eslint-plugin-prettier -D
+
+Passo 11: Instale a extensão do Prettier no VSCode.
+
+Passo 12: Adicione um novo elemento ao array de "extends" no ".eslintrc.json":
+	"prettier/@typescript-eslint"
+
+Passo 13: Instale o EditorConfig como dependecia de desenvolvimento do projeto.
+	-> npm i editorconfig -D
+
+Passo 14: Instale a extensão do EditorConfig no VSCode.
+
+Passo 15: Crie um arquivo chamado ".editorconfig" no diretório raiz do projeto e adicione:
+	root = true
+
+	[*]
+	indent_style = space
+	indent_size = 2
+	end_of_line = lf
+	charset = utf-8
+	trim_trailing_whitespace = true
+	insert_final_newline = true
